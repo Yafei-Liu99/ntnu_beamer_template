@@ -5,18 +5,46 @@
 \setbeamertemplate{footline}{}
 \setbeamercolor{section in head/foot}{bg=structure.fg!20,fg=black}
 
-% --- Dot: filled if current frame, hollow otherwise ---
-\newcommand{\navdot}[1]{%
-  \ifnum\insertframenumber=\getpagerefnumber{#1}\relax
-    \hyperlink{#1}{\textcolor{black}{$\bullet$}}%
-  \else
-    \hyperlink{#1}{\textcolor{black!45}{$\circ$}}%
-  \fi\hspace{2pt}%
+\makeatletter
+% ============================================================
+%  Setup — paste once, never touch again
+% ============================================================
+\newcounter{yf@gframe}
+
+\AtBeginSubsection{%
+  \global\expandafter\xdef
+    \csname yf@subname@\the\c@section @\the\c@subsection\endcsname
+    {\insertsubsectionhead}%
+  \@ifundefined{yf@nsub@\the\c@section}{\global\@namedef{yf@nsub@\the\c@section}{0}}{}%
+  \ifnum\@nameuse{yf@nsub@\the\c@section}<\c@subsection\relax
+    \global\@namedef{yf@nsub@\the\c@section}{\the\c@subsection}%
+  \fi
+  \global\@namedef{yf@frames@\the\c@section @\the\c@subsection}{}%
 }
 
-% --- Auto-intro frame at every \section ---
-\AtBeginSection{%
-  \begin{frame}[plain,label=yf@sec@\the\value{section}]
+\newcommand{\yf@register}{%
+  \stepcounter{yf@gframe}%
+  \edef\yf@curlist{\@nameuse{yf@frames@\the\c@section @\the\c@subsection}}%
+  \ifx\yf@curlist\@empty
+    \global\expandafter\xdef
+      \csname yf@frames@\the\c@section @\the\c@subsection\endcsname{\theyf@gframe}%
+  \else
+    \global\expandafter\xdef
+      \csname yf@frames@\the\c@section @\the\c@subsection\endcsname
+      {\yf@curlist,\theyf@gframe}%
+  \fi
+}
+
+% Content-frame environment that registers itself
+\newenvironment{autoframe}[1]{%
+  \yf@register
+  \begin{frame}[label=yf@auto@\arabic{yf@gframe}]{#1}%
+}{%
+  \end{frame}%
+}
+
+\AtBeginSection[]{%
+  \begin{frame}[label=yf@sec@\the\value{section}]
     \centering\vspace*{\fill}
     {\Huge\bfseries\insertsectionhead}\par\vspace{1em}
     {\large Introduction}
@@ -24,63 +52,84 @@
   \end{frame}%
 }
 
-% --- Headline: one \or branch per section ---
+\newcommand{\yf@dot}[1]{%
+  \ifnum\insertframenumber=\getpagerefnumber{yf@auto@#1}\relax
+    \hyperlink{yf@auto@#1}{\textcolor{black}{$\bullet$}}%
+  \else
+    \hyperlink{yf@auto@#1}{\textcolor{black!45}{$\circ$}}%
+  \fi\hspace{2pt}%
+}
+
+\def\yf@firstof#1,#2\@nil{\def\yf@firstitem{#1}}
+
+\newcommand{\yf@rsub}[2]{%
+  \edef\yf@list{\@nameuse{yf@frames@#1@#2}}%
+  \ifx\yf@list\@empty\else
+    \expandafter\yf@firstof\yf@list,\@nil
+    \hyperlink{yf@auto@\yf@firstitem}{\@nameuse{yf@subname@#1@#2}}~%
+    \@for\yf@e:=\yf@list\do{\yf@dot{\yf@e}}%
+  \fi
+}
+
 \setbeamertemplate{headline}{%
   \leavevmode
   \begin{beamercolorbox}[wd=\paperwidth,ht=3.25ex,dp=1.5ex,leftskip=1em,rightskip=1em]{section in head/foot}%
     \usebeamerfont{section in head/foot}%
-    \ifcase\insertsectionnumber\or
-      % --- Section A (1) ---
-      \hyperlink{yf@sec@1}{\textbf{A:}}\hfill
-      \hyperlink{f-Aa1}{a}\,\navdot{f-Aa1}\navdot{f-Aa2}\navdot{f-Aa3}\hfill
-      \hyperlink{f-Ab1}{b}\,\navdot{f-Ab1}\navdot{f-Ab2}\hfill
-      \hyperlink{f-Ac1}{c}\,\navdot{f-Ac1}%
-    \or
-      % --- Section B (2) ---
-      \hyperlink{yf@sec@2}{\textbf{B:}}\hfill
-      \hyperlink{f-Bd1}{d}\,\navdot{f-Bd1}\navdot{f-Bd2}\hfill
-      \hyperlink{f-Be1}{e}\,\navdot{f-Be1}\navdot{f-Be2}%
-    \or
-      % --- Section C (3) ---
-      \hyperlink{yf@sec@3}{\textbf{C:}}\hfill
-      \hyperlink{f-Cf1}{f}\,\navdot{f-Cf1}%
+    \ifnum\insertsectionnumber>0
+      \@ifundefined{yf@nsub@\the\value{section}}{}{%
+        \hyperlink{yf@sec@\the\value{section}}{\textbf{\insertsectionhead:}}\hfill
+        \@tempcnta=1\relax
+        \edef\yf@N{\@nameuse{yf@nsub@\insertsectionnumber}}%
+        \@whilenum\@tempcnta<\yf@N\do{%
+          \yf@rsub{\insertsectionnumber}{\the\@tempcnta}\hfill
+          \advance\@tempcnta by 1\relax
+        }%
+        \yf@rsub{\insertsectionnumber}{\the\@tempcnta}%
+      }%
     \fi
   \end{beamercolorbox}%
 }
+\makeatother
+% ============================================================
 
 \title{Demo}\author{Yafei}\date{\today}
 
 \begin{document}
 
+% Special pages — use plain \frame, not autoframe
 \begin{frame}[plain]\titlepage\end{frame}
 \begin{frame}[plain]{Contents}\tableofcontents\end{frame}
 
 \section{A}
 \subsection{a}
-\begin{frame}[label=f-Aa1]{A.a -- page 1}\end{frame}
-\begin{frame}[label=f-Aa2]{A.a -- page 2}\end{frame}
-\begin{frame}[label=f-Aa3]{A.a -- page 3}\end{frame}
+\begin{autoframe}{A.a -- page 1}\end{autoframe}
+\begin{autoframe}{A.a -- page 2}\end{autoframe}
+\begin{autoframe}{A.a -- page 3}\end{autoframe}
 \subsection{b}
-\begin{frame}[label=f-Ab1]{A.b -- page 1}\end{frame}
-\begin{frame}[label=f-Ab2]{A.b -- page 2}\end{frame}
+\begin{autoframe}{A.b -- page 1}\end{autoframe}
+\begin{autoframe}{A.b -- page 2}\end{autoframe}
 \subsection{c}
-\begin{frame}[label=f-Ac1]{A.c -- page 1}\end{frame}
+\begin{autoframe}{A.c -- page 1}\end{autoframe}
 
 \section{B}
 \subsection{d}
-\begin{frame}[label=f-Bd1]{B.d -- page 1}\end{frame}
-\begin{frame}[label=f-Bd2]{B.d -- page 2}\end{frame}
+\begin{autoframe}{B.d -- page 1}\end{autoframe}
+\begin{autoframe}{B.d -- page 2}\end{autoframe}
 \subsection{e}
-\begin{frame}[label=f-Be1]{B.e -- page 1}\end{frame}
-\begin{frame}[label=f-Be2]{B.e -- page 2}\end{frame}
+\begin{autoframe}{B.e -- page 1}\end{autoframe}
+\begin{autoframe}{B.e -- page 2}\end{autoframe}
 
 \section{C}
 \subsection{f}
-\begin{frame}[label=f-Cf1]{C.f -- page 1}\end{frame}
+\begin{autoframe}{C.f -- page 1}\end{autoframe}
 
+% --- Add Section D — only body edits, never the setup ---
 \section{D}
 \subsection{g}
-\begin{frame}[label=f-dg1]{D.g -- page 1}\end{frame}
+\begin{autoframe}{D.g -- page 1}\end{autoframe}
+\begin{autoframe}{D.g -- page 2}\end{autoframe}
+\subsection{h}
+\begin{autoframe}{D.h -- page 1}\end{autoframe}
 
 \begin{frame}[plain]\centering\vspace*{\fill}{\Huge Thank you!}\vspace*{\fill}\end{frame}
 
