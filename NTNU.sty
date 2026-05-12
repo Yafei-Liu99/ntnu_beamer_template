@@ -10,26 +10,20 @@
 \newcommand{\frameofframes}{/}
 \newcommand{\setframeofframes}[1]{\renewcommand{\frameofframes}{#1}}
 
+\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
+\def\beamer@writeslidentry@miniframesoff{%
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}%
+  {\addtocontents{nav}%
+   {\protect\headcommand{%
+     \protect\slideentry{\the\c@section}{0}{\the\c@subsectionslide}%
+     {\the\c@page/\the\c@page}{}{\c@part}}}}}
+\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
+\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
+
 % ============================================================
 % Headline: subsection names + miniframe dots (current section only)
 % ============================================================
-% Force miniframe dots to render with explicit pgf colors
-\setbeamertemplate{mini frame}{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \pgfsetcolor{white}%
-    \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
-    \pgfusepath{fill,stroke}
-  \end{pgfpicture}%
-}
-\setbeamertemplate{mini frame in current subsection}{%
-  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
-    \pgfsetcolor{white!50}%
-    \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
-    \pgfusepath{stroke}
-  \end{pgfpicture}%
-}
-
-% Subsection label colors in the navigation bar
+\setbeamercolor{mini frame}{fg=white,bg=ntnublue}
 \setbeamercolor{subsection in head/foot}{fg=white,bg=ntnublue}
 \setbeamercolor{subsection in head/foot shaded}{fg=white!50!ntnublue,bg=ntnublue}
 
@@ -37,7 +31,46 @@
   \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
   \end{beamercolorbox}
   \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,dp=1.5ex]{section in head/foot}%
-    \insertsubsectionnavigationhorizontal{\paperwidth}{\hskip0pt plus1filll}{\hskip0pt plus1filll}%
+    \hbox to \paperwidth{%
+      \hskip0pt plus1filll%
+      {%
+        \usebeamerfont{subsection in head/foot}%
+        \beamer@currentsubsection=0\relax%
+        \def\partentry##1##2{}%
+        \def\sectionentry##1##2##3##4##5{}%
+        \def\beamer@subsectionentry##1##2##3##4##5{}%
+        \def\beamer@subsubsectionentry##1##2##3##4##5##6{}%
+        \def\beamer@sectionpages##1##2{}%
+        \def\beamer@subsectionpages##1##2{}%
+        \def\beamer@framepages##1##2{}%
+        \def\slideentry##1##2##3##4##5##6{%
+          \ifnum##6=\c@part\relax%
+            \ifnum##1=\c@section\relax%
+              \ifnum##2>0\relax%
+                \ifnum##2>\beamer@currentsubsection\relax%
+                  \ifnum\beamer@currentsubsection>0\relax%
+                    \hskip1.5em%
+                  \fi%
+                  \beamer@currentsubsection=##2\relax%
+                  \def\beamer@navtmpcolor{white!50!ntnublue}%
+                  \ifnum\c@subsection=##2\relax%
+                    \def\beamer@navtmpcolor{white}%
+                  \fi%
+                  {\color{\beamer@navtmpcolor}##5}%
+                  \hskip0.5em%
+                \fi%
+                \ifnum##3>0\relax%
+                  {\textbullet}%
+                  \hskip1.5pt%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        }%
+        \dohead%
+      }%
+      \hskip0pt plus1filll%
+    }%
   \end{beamercolorbox}%
   \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
   \end{beamercolorbox}
