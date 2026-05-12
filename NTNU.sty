@@ -11,21 +11,21 @@
 \newcommand{\setframeofframes}[1]{\renewcommand{\frameofframes}{#1}}
 
 % ============================================================
-% Headline: current section name + miniframe dots for its slides
+% Headline: subsection names + miniframe dots (current section only)
 % ============================================================
-% Hide everything from non-current sections
-\setbeamercolor{section in head/foot shaded}{fg=ntnublue,bg=ntnublue}
-\setbeamertemplate{mini frame in other section}{}
-
-% Miniframe dot colors (visible on ntnublue background)
+% Miniframe dot colors (white on ntnublue background)
 \setbeamercolor{mini frame}{fg=white}
 \setbeamercolor{mini frame inactive}{fg=white!40!ntnublue}
+
+% Subsection label colors in the navigation bar
+\setbeamercolor{subsection in head/foot}{fg=white,bg=ntnublue}
+\setbeamercolor{subsection in head/foot shaded}{fg=white!50!ntnublue,bg=ntnublue}
 
 \setbeamertemplate{headline}{%
   \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
   \end{beamercolorbox}
   \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,dp=1.5ex]{section in head/foot}%
-    \insertsectionnavigationhorizontal{\paperwidth}{\hskip0pt plus1filll}{\hskip0pt plus1filll}%
+    \insertsubsectionnavigationhorizontal{\paperwidth}{\hskip0pt plus1filll}{\hskip0pt plus1filll}%
   \end{beamercolorbox}%
   \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
   \end{beamercolorbox}
