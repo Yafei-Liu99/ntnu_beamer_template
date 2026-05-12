@@ -7,7 +7,17 @@
 
 \RequirePackage{refcount}
 
-\useoutertheme[footline=authorinstitutetitle,subsection=false]{smoothbars}
+% ============================================================
+% NTNU Colors (official brand) — must be defined before use
+% ============================================================
+\definecolor{ntnublue}{RGB}{0,80,158}
+\xdefinecolor{ntnusky}{RGB}{221,231,238}
+
+% ============================================================
+% Suppress default navigation symbols
+% ============================================================
+\setbeamertemplate{navigation symbols}{}
+
 \makeatletter
 \newcommand{\frameofframes}{/}
 \newcommand{\setframeofframes}[1]{\renewcommand{\frameofframes}{#1}}
@@ -105,6 +115,9 @@
   \end{beamercolorbox}%
 }
 
+% ============================================================
+% Frame title
+% ============================================================
 \setbeamertemplate{frametitle}{%
   \nointerlineskip%
   \begin{beamercolorbox}[wd=\paperwidth,leftskip=.3cm,%
@@ -186,11 +199,8 @@
 \setbeamertemplate{blocks}[rounded][shadow=true]
 
 % ============================================================
-% NTNU Colors (official brand)
+% Color assignments
 % ============================================================
-\definecolor{ntnublue}{RGB}{0,80,158}
-\xdefinecolor{ntnusky}{RGB}{221,231,238}
-
 \setbeamercolor{footline}{bg=ntnublue}
 \setbeamercolor{frametitle}{bg=ntnublue,fg=white}
 \setbeamercolor{title}{bg=ntnublue}
