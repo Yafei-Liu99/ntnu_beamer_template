@@ -1,48 +1,74 @@
 \documentclass{beamer}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{}
+\setbeamercolor{section in head/foot}{bg=structure.fg!20,fg=black}
 
-\usetheme{Warsaw}
-
-% Keep section structure
-\useoutertheme{split}
-
-\setbeamertemplate{headline}
-{
-  % Top section navigation
-  \insertsectionnavigationhorizontal{\paperwidth}{}{\hskip0pt}
-
-  % Current section subsection navigation
-  \insertsubsectionnavigationhorizontal{\paperwidth}{}{\hskip0pt}
+\newcommand{\navdot}[2]{%
+  \ifnum\insertframenumber=#2\relax
+    \hyperlink{#1}{\textcolor{black}{$\bullet$}}%
+  \else
+    \hyperlink{#1}{\textcolor{black!45}{$\circ$}}%
+  \fi\hspace{2pt}%
 }
+
+\setbeamertemplate{headline}{%
+  \leavevmode
+  \begin{beamercolorbox}[wd=\paperwidth,ht=3.25ex,dp=1.5ex,leftskip=1em,rightskip=1em]{section in head/foot}%
+    \usebeamerfont{section in head/foot}%
+    \ifcase\insertsectionnumber
+      % no section yet -- empty
+    \or % Section A
+      \textbf{A:}\hfill
+      \hyperlink{f-Aa1}{a}\,\navdot{f-Aa1}{3}\navdot{f-Aa2}{4}\navdot{f-Aa3}{5}\hfill
+      \hyperlink{f-Ab1}{b}\,\navdot{f-Ab1}{6}\navdot{f-Ab2}{7}\hfill
+      \hyperlink{f-Ac1}{c}\,\navdot{f-Ac1}{8}%
+    \or % Section B
+      \textbf{B:}\hfill
+      \hyperlink{f-Bd1}{d}\,\navdot{f-Bd1}{9}\navdot{f-Bd2}{10}\hfill
+      \hyperlink{f-Be1}{e}\,\navdot{f-Be1}{11}\navdot{f-Be2}{12}%
+    \or % Section C
+      \textbf{C:}\hfill
+      \hyperlink{f-Cf1}{f}\,\navdot{f-Cf1}{13}%
+    \fi
+  \end{beamercolorbox}%
+}
+
+\title{Demo}
+\author{Yafei}
+\date{\today}
 
 \begin{document}
 
-\section{Section 1}
+\begin{frame}[plain]\titlepage\end{frame}
+\begin{frame}[plain]{Contents}\tableofcontents\end{frame}
 
-\subsection{A}
-\begin{frame}{A}
-Content
-\end{frame}
+\section{A}
+\subsection{a}
+\begin{frame}[label=f-Aa1]{A.a -- page 1}\end{frame}
+\begin{frame}[label=f-Aa2]{A.a -- page 2}\end{frame}
+\begin{frame}[label=f-Aa3]{A.a -- page 3}\end{frame}
+\subsection{b}
+\begin{frame}[label=f-Ab1]{A.b -- page 1}\end{frame}
+\begin{frame}[label=f-Ab2]{A.b -- page 2}\end{frame}
+\subsection{c}
+\begin{frame}[label=f-Ac1]{A.c -- page 1}\end{frame}
 
-\subsection{B}
-\begin{frame}{B}
-Content
-\end{frame}
+\section{B}
+\subsection{d}
+\begin{frame}[label=f-Bd1]{B.d -- page 1}\end{frame}
+\begin{frame}[label=f-Bd2]{B.d -- page 2}\end{frame}
+\subsection{e}
+\begin{frame}[label=f-Be1]{B.e -- page 1}\end{frame}
+\begin{frame}[label=f-Be2]{B.e -- page 2}\end{frame}
 
-\subsection{C}
-\begin{frame}{C}
-Content
-\end{frame}
+\section{C}
+\subsection{f}
+\begin{frame}[label=f-Cf1]{C.f -- page 1}\end{frame}
 
-\section{Section 2}
-
-\subsection{D}
-\begin{frame}{D}
-Content
-\end{frame}
-
-\subsection{E}
-\begin{frame}{E}
-Content
+\begin{frame}[plain]
+  \centering\vspace*{\fill}
+  {\Huge Thank you!}\\[1em]{\large Questions?}
+  \vspace*{\fill}
 \end{frame}
 
 \end{document}
