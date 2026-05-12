@@ -38,92 +38,29 @@
 }
 
 % ============================================================
-% Section progress bar
+% Section title card (shows only the current section)
 % ============================================================
-% Configure your phases here. Each entry: {Short label}{Date range}
-% The number of entries must match the number of \sectionprogress calls.
-\newcommand{\phaselist}{%
-    {Background}{Sep--Dec '25}/
-    {Literature}{Jan--Feb '26}/
-    {Method}{Mar--May '26}/
-    {Results}{Jun--Jul '26}/
-    {Examples}{Aug--Sep '26}/
-    {References}{Oct--Dec '26}%
-}
-
-\newcounter{sectionphase}
-
-\newcommand{\sectionprogress}{%
-  \stepcounter{sectionphase}%
+% Usage: \sectioncard{date range}{bullet1, bullet2, ...}
+\newcommand{\sectioncard}[2]{%
   \begin{frame}{}
     \vfill
     \centering
-    \begin{tikzpicture}[
-      dot done/.style={
-        circle, fill=ntnublue!45, minimum size=9pt, inner sep=0pt},
-      dot active/.style={
-        circle, fill=ntnublue, minimum size=12pt, inner sep=0pt,
-        draw=ntnublue!60, line width=1.5pt},
-      dot future/.style={
-        circle, draw=ntnublue!25, fill=white, minimum size=9pt,
-        inner sep=0pt, line width=0.8pt},
-    ]
-    \def\idx{0}%
-    \def\mycurr{\thesectionphase}%
-    %
-    % Draw nodes
-    \foreach \lbl/\dt in \phaselist {%
-      \pgfmathtruncatemacro{\idx}{\idx+1}%
-      \xdef\idx{\idx}%
-      \pgfmathsetmacro{\xpos}{(\idx-1)*2.4}%
-      %
-      \ifnum\idx=\mycurr\relax
-        % --- active ---
-        \node[dot active] (N\idx) at (\xpos, 0) {};
-        \node[above=10pt, font=\footnotesize\bfseries, text=ntnublue]
-          at (N\idx) {\lbl};
-        \node[below=10pt, font=\tiny\bfseries, text=ntnublue!80]
-          at (N\idx) {\dt};
-      \else\ifnum\idx<\mycurr\relax
-        % --- done ---
-        \node[dot done] (N\idx) at (\xpos, 0) {};
-        \node[above=10pt, font=\scriptsize, text=gray]
-          at (N\idx) {\lbl};
-        \node[below=10pt, font=\tiny, text=gray!70]
-          at (N\idx) {\dt};
-      \else
-        % --- future ---
-        \node[dot future] (N\idx) at (\xpos, 0) {};
-        \node[above=10pt, font=\scriptsize, text=gray!50]
-          at (N\idx) {\lbl};
-        \node[below=10pt, font=\tiny, text=gray!40]
-          at (N\idx) {\dt};
-      \fi\fi
-    }%
-    %
-    % Draw connecting lines
-    \pgfmathtruncatemacro{\lastidx}{\idx}%
-    \foreach \i in {1,...,\lastidx}{%
-      \pgfmathtruncatemacro{\nexti}{\i+1}%
-      \ifnum\nexti>\lastidx\relax\else
-        \ifnum\nexti>\mycurr\relax
-          \draw[ntnublue!15, line width=1.8pt] (N\i) -- (N\nexti);
-        \else
-          \draw[ntnublue!40, line width=1.8pt] (N\i) -- (N\nexti);
-        \fi
-      \fi
-    }%
-    %
-    % Checkmarks on completed phases
-    \foreach \i in {1,...,\lastidx}{%
-      \ifnum\i<\mycurr\relax
-        \node[font=\fontsize{5}{5}\selectfont, text=white] at (N\i) {\checkmark};
-      \fi
-    }%
+    \begin{tikzpicture}
+      % Accent line
+      \draw[ntnublue, line width=2pt] (-3,0) -- (3,0);
+      % Section title
+      \node[above=14pt, font=\Large\bfseries, text=ntnublue] at (0,0)
+        {\insertsection};
+      % Date range
+      \node[below=12pt, font=\normalsize, text=gray] at (0,0) {#1};
     \end{tikzpicture}
 
-    \vspace{1.8em}
-    {\Large\color{ntnublue}\bfseries \insertsection}
+    \vspace{1.5em}
+    \begin{minipage}{0.65\textwidth}
+      \begin{itemize}
+        #2
+      \end{itemize}
+    \end{minipage}
     \vfill
   \end{frame}
 }
@@ -152,7 +89,11 @@
 
 % ============================================================
 \section{Background}
-\sectionprogress
+\sectioncard{Sep -- Dec 2025}{
+  \item Research motivation and context
+  \item Key problem statement
+  \item Significance of the study
+}
 % ============================================================
 
 \begin{frame}{Research Background}
@@ -166,7 +107,11 @@
 
 % ============================================================
 \section{Literature Review}
-\sectionprogress
+\sectioncard{Jan -- Feb 2026}{
+  \item Theoretical foundations
+  \item Empirical evidence
+  \item Research gap
+}
 % ============================================================
 
 \subsection{Theoretical Foundations}
@@ -192,7 +137,11 @@
 
 % ============================================================
 \section{Methodology}
-\sectionprogress
+\sectioncard{Mar -- May 2026}{
+  \item Data description
+  \item Model specification
+  \item Identification strategy
+}
 % ============================================================
 
 \subsection{Data}
@@ -226,7 +175,11 @@
 
 % ============================================================
 \section{Results}
-\sectionprogress
+\sectioncard{Jun -- Jul 2026}{
+  \item Main findings
+  \item Robustness checks
+  \item Economic significance
+}
 % ============================================================
 
 \subsection{Main Results}
@@ -252,7 +205,11 @@
 
 % ============================================================
 \section{Template Examples}
-\sectionprogress
+\sectioncard{Aug -- Sep 2026}{
+  \item Formulas and equations
+  \item Tables and figures
+  \item Block environments
+}
 % ============================================================
 
 \subsection{Formulas}
@@ -429,7 +386,10 @@
 
 % ============================================================
 \section{References}
-\sectionprogress
+\sectioncard{Oct -- Dec 2026}{
+  \item Bibliography
+  \item Acknowledgements
+}
 % ============================================================
 
 \begin{frame}{References}
