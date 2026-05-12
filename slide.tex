@@ -16,7 +16,7 @@
 \date{\today}
 \usepackage{NTNU}
 
-% Disable auto-TOC from NTNU.sty (this variant uses progress bars instead)
+% Keep section/subsection changes from creating extra transition pages.
 \AtBeginSection[]{}
 \AtBeginSubsection[]{}
 
@@ -36,35 +36,6 @@
     rulesepcolor=\color{red!20!green!20!blue!20},
     frame=shadowbox,
 }
-
-% ============================================================
-% Section title card (shows only the current section)
-% ============================================================
-% Usage: \sectioncard{bullet1, bullet2, ...}
-\newcommand{\sectioncard}[1]{%
-  \miniframesoff
-  \begin{frame}{}
-    \vfill
-    \centering
-    \begin{tikzpicture}
-      % Accent line
-      \draw[ntnublue, line width=2pt] (-3,0) -- (3,0);
-      % Section title
-      \node[above=14pt, font=\Large\bfseries, text=ntnublue] at (0,0)
-        {\insertsection};
-    \end{tikzpicture}
-
-    \vspace{1.5em}
-    \begin{minipage}{0.65\textwidth}
-      \begin{itemize}
-        #1
-      \end{itemize}
-    \end{minipage}
-    \vfill
-  \end{frame}
-  \miniframeson
-}
-
 
 \begin{document}
 
@@ -89,10 +60,6 @@
 
 % ============================================================
 \section{Background}
-\sectioncard{
-  \item Motivation
-  \item Problem Statement
-}
 % ============================================================
 
 \subsection{Motivation}
@@ -116,10 +83,6 @@
 
 % ============================================================
 \section{Literature Review}
-\sectioncard{
-  \item Theoretical Foundations
-  \item Empirical Evidence
-}
 % ============================================================
 
 \subsection{Theoretical Foundations}
@@ -145,10 +108,6 @@
 
 % ============================================================
 \section{Methodology}
-\sectioncard{
-  \item Data
-  \item Model
-}
 % ============================================================
 
 \subsection{Data}
@@ -182,10 +141,6 @@
 
 % ============================================================
 \section{Results}
-\sectioncard{
-  \item Main Results
-  \item Robustness
-}
 % ============================================================
 
 \subsection{Main Results}
@@ -211,12 +166,6 @@
 
 % ============================================================
 \section{Template Examples}
-\sectioncard{
-  \item Formulas
-  \item Tables
-  \item Figures
-  \item Blocks
-}
 % ============================================================
 
 \subsection{Formulas}
@@ -393,9 +342,6 @@
 
 % ============================================================
 \section{References}
-\sectioncard{
-  \item Bibliography
-}
 % ============================================================
 
 \subsection{Bibliography}

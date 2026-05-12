@@ -12,11 +12,7 @@
 
 \let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
 \def\beamer@writeslidentry@miniframesoff{%
-  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}%
-  {\addtocontents{nav}%
-   {\protect\headcommand{%
-     \protect\slideentry{\the\c@section}{0}{\the\c@subsectionslide}%
-     {\the\c@page/\the\c@page}{}{\c@part}}}}}
+  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}{}}
 \newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
 \newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
 
@@ -26,13 +22,13 @@
 \setbeamercolor{mini frame}{fg=white,bg=ntnublue}
 \setbeamercolor{subsection in head/foot}{fg=white,bg=ntnublue}
 \setbeamercolor{subsection in head/foot shaded}{fg=white!50!ntnublue,bg=ntnublue}
+\setbeamerfont{subsection in head/foot}{size=\scriptsize}
 
 \setbeamertemplate{headline}{%
-  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
-  \end{beamercolorbox}
-  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,dp=1.5ex]{section in head/foot}%
-    \hbox to \paperwidth{%
-      \hskip0pt plus1filll%
+  \ifnum\c@subsection>0\relax%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=.75ex,%
+      leftskip=.35cm,rightskip=.35cm]{subsection in head/foot}%
+      \hbox to \dimexpr\paperwidth-.7cm\relax{%
       {%
         \usebeamerfont{subsection in head/foot}%
         \beamer@currentsubsection=0\relax%
@@ -49,21 +45,19 @@
               \ifnum##2>0\relax%
                 \ifnum##2>\beamer@currentsubsection\relax%
                   \ifnum\beamer@currentsubsection>0\relax%
-                    \hskip1.5em%
+                    \hskip1em%
                   \fi%
                   \beamer@currentsubsection=##2\relax%
                   \def\beamer@navtmpcolor{white!50!ntnublue}%
                   \ifnum\c@subsection=##2\relax%
                     \def\beamer@navtmpcolor{white}%
                   \fi%
-                  {\color{\beamer@navtmpcolor}##5}%
-                  \hskip0.5em%
+                  \beamer@link(##4){{\color{\beamer@navtmpcolor}##5}}%
+                  \hskip0.4em%
                 \fi%
                 \ifnum##3>0\relax%
-                  \def\beamer@extractpage####1/####2\@nil{####1}%
-                  \edef\beamer@navlinktarget{Navigation\beamer@extractpage##4\@nil}%
-                  \hyperlink{\beamer@navlinktarget}{\textbullet}%
-                  \hskip1.5pt%
+                  \beamer@link(##4){{\color{\beamer@navtmpcolor}\raisebox{0.1ex}{\scriptsize\textbullet}}}%
+                  \hskip1.2pt%
                 \fi%
               \fi%
             \fi%
@@ -71,11 +65,26 @@
         }%
         \dohead%
       }%
-      \hskip0pt plus1filll%
-    }%
+      \hfil%
+      }%
+    \end{beamercolorbox}%
+  \fi%
+}
+
+\setbeamertemplate{frametitle}{%
+  \nointerlineskip%
+  \begin{beamercolorbox}[wd=\paperwidth,leftskip=.3cm,%
+    rightskip=.3cm plus1fil,vmode]{frametitle}%
+    \vskip.35ex%
+    \usebeamerfont*{frametitle}\strut\insertframetitle%
+    \ifx\insertframesubtitle\@empty%
+      \strut\par%
+    \else%
+      \par{\usebeamerfont*{framesubtitle}%
+        {\usebeamercolor[fg]{framesubtitle}\strut\insertframesubtitle}\strut\par}%
+    \fi%
+    \vskip.35ex%
   \end{beamercolorbox}%
-  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
-  \end{beamercolorbox}
 }
 
 % ============================================================
@@ -182,19 +191,9 @@
 \setbeamercolor{subsection in sidebar}{fg=brown}
 \setbeamercolor{subsection in sidebar shaded}{fg=grey}
 
-% ============================================================
-% Auto TOC at section/subsection boundaries
-% ============================================================
-\AtBeginSection[]{
-  \begin{frame}
-    \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
-  \end{frame}
-}
-\AtBeginSubsection[]{
-  \begin{frame}
-    \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
-  \end{frame}
-}
+% Auto TOC pages at section/subsection boundaries are disabled by default.
+\AtBeginSection[]{}
+\AtBeginSubsection[]{}
 
 \mode
 <all>
