@@ -5,25 +5,43 @@
 
 \ProcessOptionsBeamer
 
-\useoutertheme[footline=authorinstitutetitle]{smoothbars}
+\useoutertheme[footline=authorinstitutetitle,subsection=false]{smoothbars}
 \makeatletter
 \newcommand{\frameofframes}{/}
 \newcommand{\setframeofframes}[1]{\renewcommand{\frameofframes}{#1}}
 
 % ============================================================
-% Headline: current section miniframes + subsection name bar
+% Headline: subsection names + miniframe dots (current section only)
 % ============================================================
-% Hide non-current sections (text invisible, no dots)
-\setbeamercolor{section in head/foot shaded}{fg=ntnublue,bg=ntnublue}
-\setbeamertemplate{mini frame in other section}{}
+% Force miniframe dots to render with explicit pgf colors
+\setbeamertemplate{mini frame}{%
+  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+    \pgfsetcolor{white}%
+    \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
+    \pgfusepath{fill,stroke}
+  \end{pgfpicture}%
+}
+\setbeamertemplate{mini frame in current subsection}{%
+  \begin{pgfpicture}{0pt}{0pt}{0.1cm}{0.1cm}
+    \pgfsetcolor{white!50}%
+    \pgfpathcircle{\pgfpoint{0.05cm}{0.05cm}}{0.05cm}
+    \pgfusepath{stroke}
+  \end{pgfpicture}%
+}
 
-% Miniframe dot colors
-\setbeamercolor{mini frame}{fg=white}
-\setbeamercolor{mini frame inactive}{fg=white!40!ntnublue}
+% Subsection label colors in the navigation bar
+\setbeamercolor{subsection in head/foot}{fg=white,bg=ntnublue}
+\setbeamercolor{subsection in head/foot shaded}{fg=white!50!ntnublue,bg=ntnublue}
 
-% Subsection bar
-\setbeamercolor{subsection in head/foot}{fg=white,bg=ntnublue!80!black}
-\setbeamercolor{subsection in head/foot shaded}{fg=white!50!ntnublue,bg=ntnublue!80!black}
+\setbeamertemplate{headline}{%
+  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,dp=1.5ex]{section in head/foot}%
+    \insertsubsectionnavigationhorizontal{\paperwidth}{\hskip0pt plus1filll}{\hskip0pt plus1filll}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+  \end{beamercolorbox}
+}
 
 % ============================================================
 % Title page
