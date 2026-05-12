@@ -60,7 +60,9 @@
                   \hskip0.5em%
                 \fi%
                 \ifnum##3>0\relax%
-                  {\textbullet}%
+                  \def\beamer@extractpage####1/####2\@nil{####1}%
+                  \edef\beamer@navlinktarget{Navigation\beamer@extractpage##4\@nil}%
+                  \hyperlink{\beamer@navlinktarget}{\textbullet}%
                   \hskip1.5pt%
                 \fi%
               \fi%
