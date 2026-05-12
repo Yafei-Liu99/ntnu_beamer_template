@@ -11,6 +11,23 @@
 \newcommand{\setframeofframes}[1]{\renewcommand{\frameofframes}{#1}}
 
 % ============================================================
+% Headline: show only current section + its subsection nav
+% ============================================================
+\setbeamertemplate{headline}{%
+  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
+  \end{beamercolorbox}
+  \begin{beamercolorbox}[wd=\paperwidth,ht=2.5ex,dp=1.5ex,%
+    leftskip=.5cm,rightskip=.5cm plus1fil]{section in head/foot}%
+    \usebeamerfont{section in head/foot}%
+    \textbf{\insertsectionhead}%
+    \hfill
+    \insertsubsectionnavigationhorizontal{.5\paperwidth}{}{}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
+  \end{beamercolorbox}
+}
+
+% ============================================================
 % Title page
 % ============================================================
 \setbeamertemplate{title page}
