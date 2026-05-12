@@ -1,41 +1,54 @@
 \documentclass{beamer}
+\usepackage{refcount}
+
 \setbeamertemplate{navigation symbols}{}
 \setbeamertemplate{footline}{}
 \setbeamercolor{section in head/foot}{bg=structure.fg!20,fg=black}
 
-\newcommand{\navdot}[2]{%
-  \ifnum\insertframenumber=#2\relax
+% --- Dot: filled if current frame, hollow otherwise ---
+\newcommand{\navdot}[1]{%
+  \ifnum\insertframenumber=\getpagerefnumber{#1}\relax
     \hyperlink{#1}{\textcolor{black}{$\bullet$}}%
   \else
     \hyperlink{#1}{\textcolor{black!45}{$\circ$}}%
   \fi\hspace{2pt}%
 }
 
+% --- Auto-intro frame at every \section ---
+\AtBeginSection{%
+  \begin{frame}[plain,label=yf@sec@\the\value{section}]
+    \centering\vspace*{\fill}
+    {\Huge\bfseries\insertsectionhead}\par\vspace{1em}
+    {\large Introduction}
+    \vspace*{\fill}
+  \end{frame}%
+}
+
+% --- Headline: one \or branch per section ---
 \setbeamertemplate{headline}{%
   \leavevmode
   \begin{beamercolorbox}[wd=\paperwidth,ht=3.25ex,dp=1.5ex,leftskip=1em,rightskip=1em]{section in head/foot}%
     \usebeamerfont{section in head/foot}%
-    \ifcase\insertsectionnumber
-      % no section yet -- empty
-    \or % Section A
-      \textbf{A:}\hfill
-      \hyperlink{f-Aa1}{a}\,\navdot{f-Aa1}{3}\navdot{f-Aa2}{4}\navdot{f-Aa3}{5}\hfill
-      \hyperlink{f-Ab1}{b}\,\navdot{f-Ab1}{6}\navdot{f-Ab2}{7}\hfill
-      \hyperlink{f-Ac1}{c}\,\navdot{f-Ac1}{8}%
-    \or % Section B
-      \textbf{B:}\hfill
-      \hyperlink{f-Bd1}{d}\,\navdot{f-Bd1}{9}\navdot{f-Bd2}{10}\hfill
-      \hyperlink{f-Be1}{e}\,\navdot{f-Be1}{11}\navdot{f-Be2}{12}%
-    \or % Section C
-      \textbf{C:}\hfill
-      \hyperlink{f-Cf1}{f}\,\navdot{f-Cf1}{13}%
+    \ifcase\insertsectionnumber\or
+      % --- Section A (1) ---
+      \hyperlink{yf@sec@1}{\textbf{A:}}\hfill
+      \hyperlink{f-Aa1}{a}\,\navdot{f-Aa1}\navdot{f-Aa2}\navdot{f-Aa3}\hfill
+      \hyperlink{f-Ab1}{b}\,\navdot{f-Ab1}\navdot{f-Ab2}\hfill
+      \hyperlink{f-Ac1}{c}\,\navdot{f-Ac1}%
+    \or
+      % --- Section B (2) ---
+      \hyperlink{yf@sec@2}{\textbf{B:}}\hfill
+      \hyperlink{f-Bd1}{d}\,\navdot{f-Bd1}\navdot{f-Bd2}\hfill
+      \hyperlink{f-Be1}{e}\,\navdot{f-Be1}\navdot{f-Be2}%
+    \or
+      % --- Section C (3) ---
+      \hyperlink{yf@sec@3}{\textbf{C:}}\hfill
+      \hyperlink{f-Cf1}{f}\,\navdot{f-Cf1}%
     \fi
   \end{beamercolorbox}%
 }
 
-\title{Demo}
-\author{Yafei}
-\date{\today}
+\title{Demo}\author{Yafei}\date{\today}
 
 \begin{document}
 
@@ -65,10 +78,10 @@
 \subsection{f}
 \begin{frame}[label=f-Cf1]{C.f -- page 1}\end{frame}
 
-\begin{frame}[plain]
-  \centering\vspace*{\fill}
-  {\Huge Thank you!}\\[1em]{\large Questions?}
-  \vspace*{\fill}
-\end{frame}
+\section{D}
+\subsection{g}
+\begin{frame}[label=f-dg1]{D.g -- page 1}\end{frame}
+
+\begin{frame}[plain]\centering\vspace*{\fill}{\Huge Thank you!}\vspace*{\fill}\end{frame}
 
 \end{document}
