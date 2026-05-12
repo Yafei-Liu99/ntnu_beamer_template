@@ -10,74 +10,6 @@
 \newcommand{\frameofframes}{/}
 \newcommand{\setframeofframes}[1]{\renewcommand{\frameofframes}{#1}}
 
-\let\beamer@writeslidentry@miniframeson=\beamer@writeslidentry
-\def\beamer@writeslidentry@miniframesoff{%
-  \expandafter\beamer@ifempty\expandafter{\beamer@framestartpage}{}%
-  {\addtocontents{nav}%
-   {\protect\headcommand{%
-     \protect\slideentry{\the\c@section}{0}{\the\c@subsectionslide}%
-     {\the\c@page/\the\c@page}{}{\c@part}}}}}
-\newcommand*{\miniframesoff}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframesoff}
-\newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
-
-% ============================================================
-% Headline: subsection names + miniframe dots (current section only)
-% ============================================================
-\setbeamercolor{mini frame}{fg=white,bg=ntnublue}
-\setbeamercolor{subsection in head/foot}{fg=white,bg=ntnublue}
-\setbeamercolor{subsection in head/foot shaded}{fg=white!50!ntnublue,bg=ntnublue}
-
-\setbeamertemplate{headline}{%
-  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
-  \end{beamercolorbox}
-  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,dp=1.5ex]{section in head/foot}%
-    \hbox to \paperwidth{%
-      \hskip0pt plus1filll%
-      {%
-        \usebeamerfont{subsection in head/foot}%
-        \beamer@currentsubsection=0\relax%
-        \def\partentry##1##2{}%
-        \def\sectionentry##1##2##3##4##5{}%
-        \def\beamer@subsectionentry##1##2##3##4##5{}%
-        \def\beamer@subsubsectionentry##1##2##3##4##5##6{}%
-        \def\beamer@sectionpages##1##2{}%
-        \def\beamer@subsectionpages##1##2{}%
-        \def\beamer@framepages##1##2{}%
-        \def\slideentry##1##2##3##4##5##6{%
-          \ifnum##6=\c@part\relax%
-            \ifnum##1=\c@section\relax%
-              \ifnum##2>0\relax%
-                \ifnum##2>\beamer@currentsubsection\relax%
-                  \ifnum\beamer@currentsubsection>0\relax%
-                    \hskip1.5em%
-                  \fi%
-                  \beamer@currentsubsection=##2\relax%
-                  \def\beamer@navtmpcolor{white!50!ntnublue}%
-                  \ifnum\c@subsection=##2\relax%
-                    \def\beamer@navtmpcolor{white}%
-                  \fi%
-                  {\color{\beamer@navtmpcolor}##5}%
-                  \hskip0.5em%
-                \fi%
-                \ifnum##3>0\relax%
-                  \def\beamer@extractpage####1/####2\@nil{####1}%
-                  \edef\beamer@navlinktarget{Navigation\beamer@extractpage##4\@nil}%
-                  \hyperlink{\beamer@navlinktarget}{\textbullet}%
-                  \hskip1.5pt%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        }%
-        \dohead%
-      }%
-      \hskip0pt plus1filll%
-    }%
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
-  \end{beamercolorbox}
-}
-
 % ============================================================
 % Title page
 % ============================================================
@@ -182,19 +114,13 @@
 \setbeamercolor{subsection in sidebar}{fg=brown}
 \setbeamercolor{subsection in sidebar shaded}{fg=grey}
 
-% ============================================================
-% Auto TOC at section/subsection boundaries
-% ============================================================
-\AtBeginSection[]{
-  \begin{frame}
-    \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
-  \end{frame}
-}
-\AtBeginSubsection[]{
-  \begin{frame}
-    \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide,subsubsectionstyle=show/shaded/hide]
-  \end{frame}
-}
+% Auto TOC at section/subsection boundaries (disabled to avoid extra pages)
+% Uncomment below to re-enable auto-TOC pages before each section:
+% \AtBeginSection[]{
+%   \begin{frame}
+%     \tableofcontents[sectionstyle=show/shaded,subsectionstyle=show/shaded/hide]
+%   \end{frame}
+% }
 
 \mode
 <all>
