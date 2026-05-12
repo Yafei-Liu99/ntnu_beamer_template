@@ -5,31 +5,25 @@
 
 \ProcessOptionsBeamer
 
-\useoutertheme[footline=authorinstitutetitle,subsection=false]{smoothbars}
+\useoutertheme[footline=authorinstitutetitle]{smoothbars}
 \makeatletter
 \newcommand{\frameofframes}{/}
 \newcommand{\setframeofframes}[1]{\renewcommand{\frameofframes}{#1}}
 
 % ============================================================
-% Headline: subsection names + miniframe dots (current section only)
+% Headline: current section miniframes + subsection name bar
 % ============================================================
-% Miniframe dot colors (white on ntnublue background)
+% Hide non-current sections (text invisible, no dots)
+\setbeamercolor{section in head/foot shaded}{fg=ntnublue,bg=ntnublue}
+\setbeamertemplate{mini frame in other section}{}
+
+% Miniframe dot colors
 \setbeamercolor{mini frame}{fg=white}
 \setbeamercolor{mini frame inactive}{fg=white!40!ntnublue}
 
-% Subsection label colors in the navigation bar
-\setbeamercolor{subsection in head/foot}{fg=white,bg=ntnublue}
-\setbeamercolor{subsection in head/foot shaded}{fg=white!50!ntnublue,bg=ntnublue}
-
-\setbeamertemplate{headline}{%
-  \begin{beamercolorbox}[colsep=1.5pt]{upper separation line head}
-  \end{beamercolorbox}
-  \begin{beamercolorbox}[wd=\paperwidth,ht=4ex,dp=1.5ex]{section in head/foot}%
-    \insertsubsectionnavigationhorizontal{\paperwidth}{\hskip0pt plus1filll}{\hskip0pt plus1filll}%
-  \end{beamercolorbox}%
-  \begin{beamercolorbox}[colsep=1.5pt]{lower separation line head}
-  \end{beamercolorbox}
-}
+% Subsection bar
+\setbeamercolor{subsection in head/foot}{fg=white,bg=ntnublue!80!black}
+\setbeamercolor{subsection in head/foot shaded}{fg=white!50!ntnublue,bg=ntnublue!80!black}
 
 % ============================================================
 % Title page
