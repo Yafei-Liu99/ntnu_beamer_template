@@ -8,9 +8,20 @@
 \RequirePackage{refcount}
 
 % ============================================================
-% NTNU Colors (official brand) — must be defined before use
+% NTNU Color Palette
+%
+% Gradient logic (top → bottom of each slide):
+%   ntnusky    — lightest: headline navigation bar
+%   ntnublue   — medium:   frametitle, block titles
+%   ntnudark   — darkest:  footline anchor
+%
+% Block hierarchy (light → dark = illustrative → critical):
+%   example    — ntnublue!50   (softest, illustrative)
+%   standard   — ntnublue!85   (default emphasis)
+%   alert      — ntnudark      (strongest, attention)
 % ============================================================
 \definecolor{ntnublue}{RGB}{0,80,158}
+\definecolor{ntnudark}{RGB}{0,56,112}
 \xdefinecolor{ntnusky}{RGB}{221,231,238}
 
 % ============================================================
@@ -64,23 +75,26 @@
 \AtBeginSection[]{%
   \begin{frame}[label=yf@sec@\the\value{section}]
     \centering\vspace*{\fill}
-    {\Huge\bfseries\color{ntnublue}\insertsectionhead}\par\vspace{1em}
-    {\large\color{gray}Introduction}
+    {\fontsize{28}{34}\bfseries\color{ntnublue}\insertsectionhead}\par
+    \vspace{0.6em}
+    {\color{ntnublue!30}\rule{0.25\paperwidth}{0.8pt}}\par
+    \vspace{0.6em}
+    {\normalsize\color{ntnublue!45}Section~\insertsectionnumber}
     \vspace*{\fill}
   \end{frame}%
 }
 
-
 % ============================================================
-% Headline: section name + subsection names with progress dots
+% Headline: navigation bar — lightest tier
 % ============================================================
-\setbeamercolor{section in head/foot}{bg=ntnublue!20,fg=black}
+\setbeamercolor{section in head/foot}{bg=ntnusky,fg=ntnublue!80!black}
+\setbeamerfont{section in head/foot}{size=\scriptsize}
 
 \newcommand{\yf@dot}[1]{%
   \ifnum\insertframenumber=\getpagerefnumber{yf@auto@#1}\relax
     \hyperlink{yf@auto@#1}{\textcolor{ntnublue}{$\bullet$}}%
   \else
-    \hyperlink{yf@auto@#1}{\textcolor{ntnublue!35}{$\circ$}}%
+    \hyperlink{yf@auto@#1}{\textcolor{ntnublue!30}{$\circ$}}%
   \fi\hspace{2pt}%
 }
 
@@ -115,7 +129,7 @@
 }
 
 % ============================================================
-% Frame title
+% Frame title — medium tier
 % ============================================================
 \setbeamertemplate{frametitle}{%
   \nointerlineskip%
@@ -164,7 +178,7 @@
 }
 
 % ============================================================
-% Footline: author/institute (top), title/page (bottom)
+% Footline — darkest tier (two-level gradient)
 % ============================================================
 \setbeamertemplate{footline}
 {%
@@ -198,41 +212,60 @@
 \setbeamertemplate{blocks}[rounded][shadow=true]
 
 % ============================================================
-% Color assignments
+% Structural color assignments
 % ============================================================
-\setbeamercolor{footline}{bg=ntnublue}
+
+% Frame chrome: light top → dark bottom
 \setbeamercolor{frametitle}{bg=ntnublue,fg=white}
-\setbeamercolor{title}{bg=ntnublue}
 \setbeamerfont{frametitle}{size=\large}
-\setbeamertemplate{bibliography item}[text]
-\setbeamertemplate{caption}[numbered]
+\setbeamercolor{author in head/foot}{bg=ntnublue,fg=white!85}
+\setbeamercolor{title in head/foot}{bg=ntnudark,fg=white!85}
+\setbeamercolor{institute in head/foot}{fg=white!70}
+\setbeamercolor{frame number}{fg=white!70}
+\setbeamercolor{footline}{bg=ntnudark}
+\setbeamercolor{upper separation line foot}{bg=ntnublue!50}
 
-\setbeamercolor{uppercol}{bg=white}
-\setbeamercolor{lowercol}{bg=white}
+% Title page
+\setbeamercolor{title}{bg=ntnublue,fg=white}
+\setbeamercolor{subtitle}{fg=white!85}
+\setbeamercolor{author}{fg=ntnublue!80!black}
+\setbeamercolor{institute}{fg=ntnublue!60!black}
+\setbeamercolor{date}{fg=ntnublue!50!black}
 
-\setbeamercolor{palette primary}{use=structure,fg=white,bg=structure.fg}
-\setbeamercolor{palette secondary}{use=structure,fg=white,bg=structure.fg!75!black}
-\setbeamercolor{palette tertiary}{use=structure,fg=white,bg=structure.fg!50!black}
-\setbeamercolor{palette quaternary}{fg=white,bg=structure.fg!50!black}
+% Blocks: gradient encodes importance
+\setbeamercolor{block title}{bg=ntnublue!85,fg=white}
+\setbeamercolor{block body}{bg=ntnusky}
+\setbeamercolor{block title alerted}{bg=ntnudark,fg=white}
+\setbeamercolor{block body alerted}{bg=ntnublue!8}
+\setbeamercolor{block title example}{bg=ntnublue!45,fg=white}
+\setbeamercolor{block body example}{bg=ntnusky!60!white}
+
+% Structure & items
+\setbeamercolor{structure}{fg=ntnublue}
+\setbeamercolor{item projected}{fg=white,bg=ntnublue!75}
+\setbeamercolor{itemize item}{fg=ntnublue!80}
+\setbeamercolor{itemize subitem}{fg=ntnublue!55}
+\setbeamercolor{enumerate item}{fg=ntnublue}
+\setbeamercolor{enumerate subitem}{fg=ntnublue!65}
+
+% TOC: sections prominent, subsections softer
+\setbeamercolor{section in toc}{fg=ntnublue}
+\setbeamercolor{subsection in toc}{fg=ntnublue!60!black}
+\setbeamercolor{section number projected}{bg=ntnublue,fg=white}
+
+% Palettes
+\setbeamercolor{palette primary}{fg=white,bg=ntnublue}
+\setbeamercolor{palette secondary}{fg=white,bg=ntnublue!75!black}
+\setbeamercolor{palette tertiary}{fg=white,bg=ntnublue!50!black}
+\setbeamercolor{palette quaternary}{fg=white,bg=ntnudark}
 \setbeamercolor{titlelike}{parent=palette primary}
 
-\setbeamercolor{block title}{bg=ntnublue,fg=white}
-\setbeamercolor{block body}{bg=ntnusky}
-\setbeamercolor*{block title example}{use={normal text,example text},bg=white,fg=ntnublue}
+% Misc
+\setbeamertemplate{bibliography item}[text]
+\setbeamertemplate{caption}[numbered]
+\setbeamercolor{caption name}{fg=ntnublue!80}
 \setbeamercolor{fine separation line}{}
-\setbeamercolor{item projected}{fg=white}
-\setbeamercolor{palette sidebar primary}{use=normal text,fg=normal text.fg}
-\setbeamercolor{palette sidebar quaternary}{use=structure,fg=structure.fg}
-\setbeamercolor{palette sidebar secondary}{use=structure,fg=structure.fg}
-\setbeamercolor{palette sidebar tertiary}{use=normal text,fg=normal text.fg}
-\setbeamercolor{section in sidebar}{fg=brown}
-\setbeamercolor{section in sidebar shaded}{fg=grey}
 \setbeamercolor{separation line}{}
-\setbeamercolor{sidebar}{bg=ntnublue}
-\setbeamercolor{sidebar}{parent=palette primary}
-\setbeamercolor{structure}{fg=ntnublue}
-\setbeamercolor{subsection in sidebar}{fg=brown}
-\setbeamercolor{subsection in sidebar shaded}{fg=grey}
 
 \mode
 <all>
