@@ -40,42 +40,42 @@
   \begin{tikzpicture}[
     >=Stealth,
     phase/.style={
-      draw=ntnublue!60, fill=ntnusky, rounded corners=2pt,
-      minimum height=0.7cm, text=black, font=\small,
-      inner xsep=6pt, inner ysep=2pt, text width=6.5cm, align=left,
+      draw=ntnublue!25, fill=ntnusky, rounded corners=2pt,
+      minimum height=0.8cm, text=black, font=\small,
+      inner xsep=8pt, inner ysep=3pt, text width=6.5cm, align=left,
     },
     current/.style={
-      draw=ntnublue, fill=ntnublue!25, rounded corners=2pt,
-      minimum height=0.7cm, text=black, font=\small\bfseries,
-      inner xsep=6pt, inner ysep=2pt, text width=6.5cm, align=left,
+      draw=ntnublue, fill=ntnublue!12, rounded corners=2pt,
+      minimum height=0.8cm, text=black, font=\small\bfseries,
+      inner xsep=8pt, inner ysep=3pt, text width=6.5cm, align=left,
       line width=1.2pt,
     },
-    timelabel/.style={font=\scriptsize\color{gray}, anchor=east},
+    timelabel/.style={font=\scriptsize\color{ntnublue!60}, anchor=east},
   ]
   \def\idx{0}%
   \foreach \dates/\desc in {#2} {%
     \pgfmathtruncatemacro{\idx}{\idx+1}%
     \xdef\idx{\idx}%
-    \pgfmathsetmacro{\yval}{-(\idx-1)*1.05}%
+    \pgfmathsetmacro{\yval}{-(\idx-1)*1.1}%
     \ifnum\idx=\currentphase
-      \node[current, anchor=west] (P\idx) at (0.2,\yval) {\desc};
+      \node[current, anchor=west] (P\idx) at (0.3,\yval) {\desc};
       \node[timelabel] at (0,\yval) {\dates};
       \node[font=\scriptsize, text=ntnublue] at ($(P\idx.east)+(0.4,0)$) {$\blacktriangleleft$};
     \else
-      \node[phase, anchor=west] (P\idx) at (0.2,\yval) {\desc};
+      \node[phase, anchor=west] (P\idx) at (0.3,\yval) {\desc};
       \node[timelabel] at (0,\yval) {\dates};
     \fi
   }%
   \pgfmathtruncatemacro{\lastidx}{\idx}%
   \ifnum\lastidx>1
-    \draw[ntnublue!40, line width=1.5pt]
-      (P1.south west) +(-0.15,0) -- (P\lastidx.north west) +(-0.15,0);
+    \draw[ntnublue!30, line width=1.5pt]
+      ([xshift=-0.15cm]P1.west) -- ([xshift=-0.15cm]P\lastidx.west);
   \fi
   \foreach \i in {1,...,\lastidx}{%
     \ifnum\i=\currentphase
-      \fill[ntnublue] (P\i.west) +(-0.15,0) circle (3pt);
+      \fill[ntnublue] ([xshift=-0.15cm]P\i.west) circle (3.5pt);
     \else
-      \fill[ntnublue!40] (P\i.west) +(-0.15,0) circle (2.5pt);
+      \fill[ntnublue!35] ([xshift=-0.15cm]P\i.west) circle (2.5pt);
     \fi
   }%
   \end{tikzpicture}%
