@@ -85,7 +85,7 @@
 \begin{document}
 
 % ============================================================
-% Title page
+% Special pages — use plain frame, not autoframe
 % ============================================================
 \begin{frame}
     \titlepage
@@ -95,10 +95,7 @@
     \end{figure}
 \end{frame}
 
-% ============================================================
-% Table of contents
-% ============================================================
-\begin{frame}{Outline}
+\begin{frame}[plain]{Outline}
     \tableofcontents[sectionstyle=show,subsectionstyle=show/shaded/hide]
 \end{frame}
 
@@ -109,24 +106,24 @@
 
 \subsection{Objectives}
 
-\begin{frame}{Lecture Objectives}
+\begin{autoframe}{Lecture Objectives}
     By the end of this lecture, you should be able to:
     \begin{itemize}
         \item Objective 1: describe the concept
         \item Objective 2: apply the method
         \item Objective 3: interpret the results
     \end{itemize}
-\end{frame}
+\end{autoframe}
 
 \subsection{Motivation}
 
-\begin{frame}{Motivation}
+\begin{autoframe}{Motivation}
     \begin{itemize}
         \item Why this topic matters
         \item Connection to previous lectures
         \item Real-world relevance
     \end{itemize}
-\end{frame}
+\end{autoframe}
 
 
 % ============================================================
@@ -135,7 +132,7 @@
 
 \subsection{Definitions}
 
-\begin{frame}{Core Definitions}
+\begin{autoframe}{Core Definitions}
     \begin{block}{Definition 1}
         A formal definition of the key concept goes here.
     \end{block}
@@ -145,11 +142,11 @@
     \begin{block}{Definition 2}
         Another important definition for this lecture.
     \end{block}
-\end{frame}
+\end{autoframe}
 
 \subsection{Theory}
 
-\begin{frame}{Theoretical Framework}
+\begin{autoframe}{Theoretical Framework}
     \begin{itemize}
         \item Main theoretical result or proposition
         \item Key assumptions and conditions
@@ -161,7 +158,7 @@
     \begin{equation}
         Y_{i,t} = \alpha + \beta X_{i,t} + \gamma Z_{i,t} + \epsilon_{i,t}
     \end{equation}
-\end{frame}
+\end{autoframe}
 
 
 % ============================================================
@@ -170,7 +167,7 @@
 
 \subsection{Worked Example}
 
-\begin{frame}{Worked Example}
+\begin{autoframe}{Worked Example}
     \begin{example}
         Consider the case where $X = 1$ and $Z = 0$.
         Then the model reduces to:
@@ -179,11 +176,11 @@
         \]
         Interpretation: $\beta$ captures the treatment effect directly.
     \end{example}
-\end{frame}
+\end{autoframe}
 
 \subsection{Application}
 
-\begin{frame}{Application: Data Overview}
+\begin{autoframe}{Application: Data Overview}
     \begin{table}[htpb]
         \centering
         \footnotesize
@@ -198,7 +195,7 @@
         \end{tabular}
         \caption{Variable definitions and data sources}
     \end{table}
-\end{frame}
+\end{autoframe}
 
 
 % ============================================================
@@ -207,7 +204,7 @@
 
 \subsection{Key Takeaways}
 
-\begin{frame}{Key Takeaways}
+\begin{autoframe}{Key Takeaways}
     \begin{enumerate}
         \item Takeaway 1: summary of the main concept
         \item Takeaway 2: summary of the key method
@@ -216,7 +213,7 @@
 
     \vspace{1em}
     \textbf{Next lecture:} Topic of the following session.
-\end{frame}
+\end{autoframe}
 
 
 % ============================================================
@@ -225,7 +222,7 @@
 
 \subsection{Bibliography}
 
-\begin{frame}{References}
+\begin{autoframe}{References}
     \begin{thebibliography}{99}
         \bibitem{article1} Author, F. and Author, S.
         \emph{Title of the Article}.
@@ -235,13 +232,13 @@
         \emph{Textbook Title}, 3rd ed.
         Publisher, 2023.
     \end{thebibliography}
-\end{frame}
+\end{autoframe}
 
 
 % ============================================================
-% Thank you
+% Thank you — plain frame, not autoframe
 % ============================================================
-\begin{frame}
+\begin{frame}[plain]
     \begin{center}
         {\Huge Thank You!}
 
