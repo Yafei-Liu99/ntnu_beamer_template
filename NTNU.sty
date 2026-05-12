@@ -17,59 +17,69 @@
 \newcommand*{\miniframeson}{\let\beamer@writeslidentry=\beamer@writeslidentry@miniframeson}
 
 % ============================================================
-% Headline: subsection names + miniframe dots (current section only)
+% Headline: current section + subsection dots
 % ============================================================
 \setbeamercolor{mini frame}{fg=white,bg=ntnublue}
 \setbeamercolor{subsection in head/foot}{fg=white,bg=ntnublue}
 \setbeamercolor{subsection in head/foot shaded}{fg=white!50!ntnublue,bg=ntnublue}
 \setbeamerfont{subsection in head/foot}{size=\scriptsize}
 
-\setbeamertemplate{headline}{%
-  \ifnum\c@subsection>0\relax%
-    \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=.75ex,%
-      leftskip=.35cm,rightskip=.35cm]{subsection in head/foot}%
-      \hbox to \dimexpr\paperwidth-.7cm\relax{%
-      {%
-        \usebeamerfont{subsection in head/foot}%
-        \beamer@currentsubsection=0\relax%
-        \def\partentry##1##2{}%
-        \def\sectionentry##1##2##3##4##5{}%
-        \def\beamer@subsectionentry##1##2##3##4##5{}%
-        \def\beamer@subsubsectionentry##1##2##3##4##5##6{}%
-        \def\beamer@sectionpages##1##2{}%
-        \def\beamer@subsectionpages##1##2{}%
-        \def\beamer@framepages##1##2{}%
-        \def\slideentry##1##2##3##4##5##6{%
-          \ifnum##6=\c@part\relax%
-            \ifnum##1=\c@section\relax%
-              \ifnum##2>0\relax%
-                \ifnum##2>\beamer@currentsubsection\relax%
-                  \ifnum\beamer@currentsubsection>0\relax%
-                    \hskip1em%
-                  \fi%
-                  \beamer@currentsubsection=##2\relax%
-                  \def\beamer@navtmpcolor{white!50!ntnublue}%
-                  \ifnum\c@subsection=##2\relax%
-                    \def\beamer@navtmpcolor{white}%
-                  \fi%
-                  \beamer@link(##4){{\color{\beamer@navtmpcolor}##5}}%
-                  \hskip0.4em%
-                \fi%
-                \ifnum##3>0\relax%
-                  \beamer@link(##4){{\color{\beamer@navtmpcolor}\raisebox{0.1ex}{\scriptsize\textbullet}}}%
-                  \hskip1.2pt%
-                \fi%
-              \fi%
-            \fi%
+\newcommand*{\ntnu@currentsectionhead}{%
+  \usebeamerfont{subsection in head/foot}%
+  \insertsectionhead%
+}
+
+\newcommand*{\ntnu@currentsubsectiondots}{%
+  \usebeamerfont{subsection in head/foot}%
+  {%
+    \def\partentry##1##2{}%
+    \def\sectionentry##1##2##3##4##5{}%
+    \def\beamer@subsectionentry##1##2##3##4##5{%
+      \ifnum##1=\c@part\relax%
+        \ifnum##2=\c@section\relax%
+          \def\beamer@navtmpcolor{white!55!ntnublue}%
+          \def\beamer@navtmpsize{\tiny}%
+          \ifnum##3=\c@subsection\relax%
+            \def\beamer@navtmpcolor{white}%
+            \def\beamer@navtmpsize{\scriptsize}%
           \fi%
+          \hyperlink{Navigation##4}{%
+            {\color{\beamer@navtmpcolor}\raisebox{0.1ex}{\beamer@navtmpsize\textbullet}}}%
+          \hskip2.2pt%
+        \fi%
+      \fi%
+    }%
+    \def\beamer@subsubsectionentry##1##2##3##4##5##6{}%
+    \def\beamer@sectionpages##1##2{}%
+    \def\beamer@subsectionpages##1##2{}%
+    \def\beamer@framepages##1##2{}%
+    \def\slideentry##1##2##3##4##5##6{}%
+    \dohead%
+  }%
+}
+
+\newcommand*{\ntnu@renderheadline}{%
+  \ifnum\c@section>0\relax%
+    \begin{beamercolorbox}[wd=\paperwidth,ht=3.6ex,dp=.9ex,%
+      leftskip=.45cm,rightskip=.45cm]{subsection in head/foot}%
+      \vbox to 3.6ex{%
+        \vskip.25ex%
+        \hbox to \dimexpr\paperwidth-.9cm\relax{%
+          \ntnu@currentsectionhead%
+          \hfil%
         }%
-        \dohead%
-      }%
-      \hfil%
+        \vskip.1ex%
+        \hbox to \dimexpr\paperwidth-.9cm\relax{%
+          \ntnu@currentsubsectiondots%
+          \hfil%
+        }%
+        \vss%
       }%
     \end{beamercolorbox}%
   \fi%
 }
+
+\setbeamertemplate{headline}{\ntnu@renderheadline}
 
 \setbeamertemplate{frametitle}{%
   \nointerlineskip%
