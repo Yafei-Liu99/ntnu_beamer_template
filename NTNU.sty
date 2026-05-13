@@ -92,7 +92,7 @@
 \setbeamerfont{section in head/foot}{size=\scriptsize}
 
 \newcommand{\yf@dot}[1]{%
-  \ifnum\insertframenumber=\getpagerefnumber{yf@auto@#1}\relax
+  \ifnum\insertframenumber=\getrefnumber{yf@auto@#1}\relax
     \hyperlink{yf@auto@#1}{\textcolor{ntnublue}{$\bullet$}}%
   \else
     \hyperlink{yf@auto@#1}{\textcolor{ntnublue!30}{$\circ$}}%
