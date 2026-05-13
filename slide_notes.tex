@@ -1,0 +1,360 @@
+\documentclass[aspectratio=169]{beamer}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{pgfpages}
+
+% ── Speaker notes (dual-screen via pympress) ──
+% Compile normally:        pdflatex slide_notes.tex
+% Compile with notes:      pdflatex "\def\withnotes{1}\input{slide_notes.tex}"
+\ifdefined\withnotes
+  \setbeameroption{show notes on second screen=right}
+\fi
+\setbeamerfont{note page}{size=\small}
+
+% packages
+\usepackage{latexsym,amsmath,xcolor,multicol,booktabs}
+\usepackage{graphicx,listings,stackengine}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc}
+
+\author[Author]{Your Name}
+\title[Lecture Title]{Lecture Title Here}
+\subtitle{Course Name --- Lecture N}
+\institute[NTNU]{Department of Economics, NTNU}
+\date{\today}
+\usepackage{NTNU}
+
+% code listing style
+\definecolor{deepblue}{rgb}{0,0,0.5}
+\definecolor{deepred}{rgb}{0.6,0,0}
+\definecolor{deepgreen}{rgb}{0,0.5,0}
+\definecolor{halfgray}{gray}{0.55}
+
+\lstset{
+    basicstyle=\ttfamily\small,
+    keywordstyle=\bfseries\color{deepblue},
+    emphstyle=\ttfamily\color{deepred},
+    stringstyle=\color{deepgreen},
+    numbers=left,
+    numberstyle=\small\color{halfgray},
+    rulesepcolor=\color{red!20!green!20!blue!20},
+    frame=shadowbox,
+}
+
+% ============================================================
+% Timeline command
+% ============================================================
+\newcommand{\timeline}[2]{%
+  \def\currentphase{#1}%
+  \begin{tikzpicture}[
+    >=Stealth,
+    phase/.style={
+      draw=ntnublue!25, fill=ntnusky, rounded corners=2pt,
+      minimum height=0.8cm, text=black, font=\small,
+      inner xsep=8pt, inner ysep=3pt, text width=6.5cm, align=left,
+    },
+    current/.style={
+      draw=ntnublue, fill=ntnublue!12, rounded corners=2pt,
+      minimum height=0.8cm, text=black, font=\small\bfseries,
+      inner xsep=8pt, inner ysep=3pt, text width=6.5cm, align=left,
+      line width=1.2pt,
+    },
+    timelabel/.style={font=\scriptsize\color{ntnublue!60}, anchor=east},
+  ]
+  \def\idx{0}%
+  \foreach \dates/\desc in {#2} {%
+    \pgfmathtruncatemacro{\idx}{\idx+1}%
+    \xdef\idx{\idx}%
+    \pgfmathsetmacro{\yval}{-(\idx-1)*1.1}%
+    \ifnum\idx=\currentphase
+      \node[current, anchor=west] (P\idx) at (0.3,\yval) {\desc};
+      \node[timelabel] at (0,\yval) {\dates};
+      \node[font=\scriptsize, text=ntnublue] at ($(P\idx.east)+(0.4,0)$) {$\blacktriangleleft$};
+    \else
+      \node[phase, anchor=west] (P\idx) at (0.3,\yval) {\desc};
+      \node[timelabel] at (0,\yval) {\dates};
+    \fi
+  }%
+  \pgfmathtruncatemacro{\lastidx}{\idx}%
+  \ifnum\lastidx>1
+    \draw[ntnublue!30, line width=1.5pt]
+      ([xshift=-0.15cm]P1.west) -- ([xshift=-0.15cm]P\lastidx.west);
+  \fi
+  \foreach \i in {1,...,\lastidx}{%
+    \ifnum\i=\currentphase
+      \fill[ntnublue] ([xshift=-0.15cm]P\i.west) circle (3.5pt);
+    \else
+      \fill[ntnublue!35] ([xshift=-0.15cm]P\i.west) circle (2.5pt);
+    \fi
+  }%
+  \end{tikzpicture}%
+}
+
+
+\begin{document}
+
+% ============================================================
+% Special pages — use plain frame, not autoframe
+% ============================================================
+\begin{frame}
+    \titlepage
+    \begin{figure}[htpb]
+        \centering
+        \includegraphics[width=0.25\linewidth]{pic/ntnu-logo.pdf}
+    \end{figure}
+\end{frame}
+\note{Welcome everyone. Introduce yourself and the course.}
+
+\begin{frame}[plain]{Outline}
+    \tableofcontents[sectionstyle=show,subsectionstyle=show/show/show]
+\end{frame}
+\note{Walk through the outline briefly. Mention the key sections.}
+
+
+% ============================================================
+\section{Introduction}
+% ============================================================
+
+\subsection{Objectives}
+
+\begin{autoframe}{Lecture Objectives}
+    By the end of this lecture, you should be able to:
+    \begin{itemize}
+        \item Objective 1: describe the concept
+        \item Objective 2: apply the method
+        \item Objective 3: interpret the results
+    \end{itemize}
+\end{autoframe}
+\note{State what students will learn. Tie each objective to an assessment.}
+
+\subsection{Motivation}
+
+\begin{autoframe}{Motivation}
+    \begin{itemize}
+        \item Why this topic matters
+        \item Connection to previous lectures
+        \item Real-world relevance
+    \end{itemize}
+\end{autoframe}
+\note{Explain the real-world context. Reference the previous lecture briefly.}
+
+
+% ============================================================
+\section{Key Concepts}
+% ============================================================
+
+\subsection{Definitions}
+
+\begin{autoframe}{Core Definitions}
+    \begin{block}{Definition 1}
+        A formal definition of the key concept goes here.
+    \end{block}
+
+    \vspace{0.5em}
+
+    \begin{block}{Definition 2}
+        Another important definition for this lecture.
+    \end{block}
+\end{autoframe}
+\note{Read definitions slowly. Ask if anyone has seen these before.}
+
+\subsection{Theory}
+
+\begin{autoframe}{Theoretical Framework}
+    \begin{itemize}
+        \item Main theoretical result or proposition
+        \item Key assumptions and conditions
+        \item Intuition behind the result
+    \end{itemize}
+
+    \vspace{0.5em}
+    The central equation:
+    \begin{equation}
+        Y_{i,t} = \alpha + \beta X_{i,t} + \gamma Z_{i,t} + \epsilon_{i,t}
+    \end{equation}
+\end{autoframe}
+\note{Walk through each variable in the equation. Emphasize the identification assumption.}
+
+
+% ============================================================
+\section{Examples}
+% ============================================================
+
+\subsection{Worked Example}
+
+\begin{autoframe}{Worked Example}
+    \begin{example}
+        Consider the case where $X = 1$ and $Z = 0$.
+        Then the model reduces to:
+        \[
+            Y_{i,t} = \alpha + \beta + \epsilon_{i,t}
+        \]
+        Interpretation: $\beta$ captures the treatment effect directly.
+    \end{example}
+\end{autoframe}
+\note{Work through this step by step on the board if needed.}
+
+\subsection{Application}
+
+\begin{autoframe}{Application: Data Overview}
+    \begin{table}[htpb]
+        \centering
+        \footnotesize
+        \begin{tabular}{lll}
+            \toprule
+            \textbf{Variable} & \textbf{Description} & \textbf{Source} \\
+            \midrule
+            $Y_{i,t}$  & Outcome variable    & Database A \\
+            $X_{i,t}$  & Treatment indicator & Database B \\
+            $Z_{i,t}$  & Control vector      & Database C \\
+            \bottomrule
+        \end{tabular}
+        \caption{Variable definitions and data sources}
+    \end{table}
+\end{autoframe}
+\note{Describe each data source. Mention the sample period and any exclusions.}
+
+
+% ============================================================
+\section{Summary}
+% ============================================================
+
+\subsection{Key Takeaways}
+
+\begin{autoframe}{Key Takeaways}
+    \begin{enumerate}
+        \item Takeaway 1: summary of the main concept
+        \item Takeaway 2: summary of the key method
+        \item Takeaway 3: practical implications
+    \end{enumerate}
+
+    \vspace{1em}
+    \textbf{Next lecture:} Topic of the following session.
+\end{autoframe}
+\note{Recap the three main points. Preview what comes next week.}
+
+
+% ============================================================
+\section{References}
+% ============================================================
+
+\subsection{Bibliography}
+
+\begin{autoframe}{References}
+    \begin{thebibliography}{99}
+        \bibitem{article1} Author, F. and Author, S.
+        \emph{Title of the Article}.
+        Journal Name, 2024.
+
+        \bibitem{textbook1} Author, T.
+        \emph{Textbook Title}, 3rd ed.
+        Publisher, 2023.
+    \end{thebibliography}
+\end{autoframe}
+\note{Mention which readings are required vs.\ optional.}
+
+
+% ============================================================
+% Thank you — plain frame, not autoframe
+% ============================================================
+\begin{frame}[plain]
+    \begin{center}
+        {\Huge Thank You!}
+
+        \vspace{1em}
+        \normalsize
+        Your Name \\
+        \texttt{your.email@ntnu.no} \\
+        Your Department, NTNU
+    \end{center}
+\end{frame}
+\note{Open for questions. Remind students of office hours.}
+
+
+% ============================================================
+% APPENDIX: Template Examples
+% ============================================================
+
+\appendix
+\section*{Template Examples}
+
+\begin{frame}{Example: Incremental Reveal}
+    Items appear one at a time (overlay specification):
+    \begin{itemize}[<+-| alert@+>]
+        \item First point (appears alone, highlighted)
+        \item Second point (added next)
+        \item Third point (added last)
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{Example: Blocks}
+    \begin{block}{Standard Block}
+        Used for general information or definitions.
+    \end{block}
+
+    \begin{alertblock}{Alert Block}
+        Used for warnings or important notes.
+    \end{alertblock}
+
+    \begin{exampleblock}{Example Block}
+        Used for examples or illustrations.
+    \end{exampleblock}
+\end{frame}
+
+\begin{frame}{Example: Timeline}
+    \centering
+    \timeline{3}{%
+        {Sep--Dec 2025}/{Literature review \& data collection},
+        {Jan--Mar 2026}/{Preliminary analysis \& model development},
+        {Apr--Jun 2026}/{Main empirical analysis},
+        {Jul--Sep 2026}/{Robustness checks \& writing},
+        {Oct--Dec 2026}/{Paper submission \& revision}%
+    }
+\end{frame}
+
+\begin{frame}{Example: Table}
+    \begin{table}[htpb]
+        \centering
+        \footnotesize
+        \begin{tabular}{lll}
+            \toprule
+            \textbf{Phase} & \textbf{Period} & \textbf{Deliverable} \\
+            \midrule
+            Literature review   & Sep--Dec 2025 & Survey paper draft \\
+            Data collection     & Jan--Feb 2026 & Clean dataset \\
+            Model development   & Feb--Mar 2026 & Working model \\
+            Empirical analysis  & Apr--Jun 2026 & Results tables \\
+            \bottomrule
+        \end{tabular}
+        \caption{Project milestones}
+    \end{table}
+\end{frame}
+
+\begin{frame}{Example: Equation}
+    The baseline regression:
+    \begin{equation}
+        Y_{i,t} = \alpha + \beta X_{i,t} + \gamma Z_{i,t} + \epsilon_{i,t}
+    \end{equation}
+    where $Y_{i,t}$ is the dependent variable, $X_{i,t}$ is the treatment, and $Z_{i,t}$ is a vector of controls.
+\end{frame}
+
+\begin{frame}{Example: Two Columns}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \textbf{Left column}
+            \begin{itemize}
+                \item Point A
+                \item Point B
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \textbf{Right column}
+            \begin{itemize}
+                \item Point C
+                \item Point D
+            \end{itemize}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+\end{document}
