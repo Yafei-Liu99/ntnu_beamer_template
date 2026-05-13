@@ -6,6 +6,7 @@
 \ProcessOptionsBeamer
 
 \RequirePackage{refcount}
+\RequirePackage{tikz}
 
 % ============================================================
 % NTNU Color Palette
@@ -266,6 +267,40 @@
 \setbeamercolor{caption name}{fg=ntnublue!80}
 \setbeamercolor{fine separation line}{}
 \setbeamercolor{separation line}{}
+
+% ============================================================
+% Thank-you page — NTNU branded closing slide
+% ============================================================
+\newcommand{\makethankyou}[1][]{%
+  \begin{frame}[plain]
+    \begin{tikzpicture}[remember picture,overlay]
+      \fill[ntnusky] (current page.north west)
+        rectangle ([yshift=-0.8cm]current page.north east);
+      \fill[ntnublue] ([yshift=1.2cm]current page.south west)
+        rectangle ([yshift=0.6cm]current page.south east);
+      \fill[ntnudark] (current page.south west)
+        rectangle ([yshift=0.6cm]current page.south east);
+    \end{tikzpicture}
+    \vspace*{\fill}
+    \begin{center}
+      {\fontsize{32}{38}\selectfont\bfseries\color{ntnublue}Thank You!}\par
+      \vspace{0.6em}
+      {\color{ntnublue!30}\rule{0.25\paperwidth}{0.8pt}}\par
+      \vspace{0.8em}
+      {\normalsize\color{ntnublue!80!black}\insertauthor}\par
+      \vspace{0.3em}
+      \def\yf@tkemail{#1}%
+      \ifx\yf@tkemail\@empty\else
+        {\small\texttt{\color{ntnublue!60!black}#1}}\par
+        \vspace{0.3em}
+      \fi
+      {\small\color{ntnublue!60!black}\insertinstitute}\par
+      \vspace{1.2em}
+      \includegraphics[width=0.18\linewidth]{pic/ntnu-logo.pdf}
+    \end{center}
+    \vspace*{\fill}
+  \end{frame}%
+}
 
 \mode
 <all>
