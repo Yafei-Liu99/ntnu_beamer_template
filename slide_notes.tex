@@ -4,11 +4,8 @@
 \usepackage{pgfpages}
 
 % ── Speaker notes (dual-screen via pympress) ──
-% Compile normally:        pdflatex slide_notes.tex
-% Compile with notes:      pdflatex "\def\withnotes{1}\input{slide_notes.tex}"
-\ifdefined\withnotes
-  \setbeameroption{show notes on second screen=right}
-\fi
+% This file always includes notes; use slide.tex for the clean version.
+\setbeameroption{show notes on second screen=right}
 \setbeamerfont{note page}{size=\small}
 
 % packages
