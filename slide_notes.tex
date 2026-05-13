@@ -103,12 +103,34 @@
         \includegraphics[width=0.25\linewidth]{pic/ntnu-logo.pdf}
     \end{figure}
 \end{frame}
-\note{Welcome everyone. Introduce yourself and the course.}
+\note{%
+  Welcome everyone to today's lecture.
+
+  \begin{itemize}
+    \item Introduce yourself: name, office hours, email.
+    \item Remind students this is Lecture~N of the course.
+    \item Mention the recording policy (if applicable).
+    \item Ask: ``Has everyone accessed the course page?''
+  \end{itemize}
+
+  \textbf{Timing:} spend no more than 2 minutes here.
+}
 
 \begin{frame}[plain]{Outline}
     \tableofcontents[sectionstyle=show,subsectionstyle=show/show/show]
 \end{frame}
-\note{Walk through the outline briefly. Mention the key sections.}
+\note{%
+  Walk through the outline briefly.
+
+  \begin{enumerate}
+    \item Introduction --- why we care about this topic.
+    \item Key Concepts --- the theoretical backbone.
+    \item Examples --- hands-on application.
+    \item Summary --- what to remember for the exam.
+  \end{enumerate}
+
+  Tell students: ``Feel free to stop me at any point with questions.''
+}
 
 
 % ============================================================
@@ -125,7 +147,19 @@
         \item Objective 3: interpret the results
     \end{itemize}
 \end{autoframe}
-\note{State what students will learn. Tie each objective to an assessment.}
+\note{%
+  Read each objective aloud and connect it to an assessment:
+
+  \begin{itemize}
+    \item Objective~1 $\to$ tested in Problem Set~3, Q2.
+    \item Objective~2 $\to$ needed for the group project.
+    \item Objective~3 $\to$ will appear in the midterm.
+  \end{itemize}
+
+  \textbf{Key message:} by the end of today, you should be comfortable
+  setting up the model and interpreting output --- not just memorising
+  formulas.
+}
 
 \subsection{Motivation}
 
@@ -136,7 +170,19 @@
         \item Real-world relevance
     \end{itemize}
 \end{autoframe}
-\note{Explain the real-world context. Reference the previous lecture briefly.}
+\note{%
+  Motivate the topic with a concrete story:
+
+  ``In 2023, researchers at the Norwegian central bank used exactly this
+  method to evaluate the effect of interest rate changes on household
+  spending.  That's the kind of question we'll learn to answer today.''
+
+  \medskip
+  \textbf{Link to last lecture:}
+  Recall the reduced-form approach from Lecture~N$-$1.
+  Today we move to a structural model --- ask students what they think
+  the difference is before explaining.
+}
 
 
 % ============================================================
@@ -156,7 +202,21 @@
         Another important definition for this lecture.
     \end{block}
 \end{autoframe}
-\note{Read definitions slowly. Ask if anyone has seen these before.}
+\note{%
+  Read each definition slowly and pause after each one.
+
+  \textbf{Definition~1:} Ask the class: ``Has anyone encountered this
+  term before?  In what context?'' --- use their answers to anchor the
+  formal statement in intuition.
+
+  \textbf{Definition~2:} Emphasise the subtle distinction from
+  Definition~1.  Common student confusion: they mix up the two because
+  both involve conditional expectations.
+
+  \medskip
+  \textit{Tip:} Write both definitions side-by-side on the whiteboard
+  and circle where they differ.
+}
 
 \subsection{Theory}
 
@@ -173,7 +233,24 @@
         Y_{i,t} = \alpha + \beta X_{i,t} + \gamma Z_{i,t} + \epsilon_{i,t}
     \end{equation}
 \end{autoframe}
-\note{Walk through each variable in the equation. Emphasize the identification assumption.}
+\note{%
+  Walk through the equation term by term:
+
+  \begin{description}
+    \item[$Y_{i,t}$] Outcome we want to explain (e.g.\ household spending).
+    \item[$X_{i,t}$] Treatment / policy variable (e.g.\ interest rate change).
+    \item[$Z_{i,t}$] Controls --- list 2--3 concrete examples.
+    \item[$\epsilon_{i,t}$] Everything we cannot observe.
+  \end{description}
+
+  \textbf{Identification assumption:}
+  $\mathbb{E}[\epsilon_{i,t} \mid X_{i,t}, Z_{i,t}] = 0$.
+  Ask: ``When might this fail?'' --- guide students toward omitted
+  variable bias and reverse causality.
+
+  \medskip
+  \textbf{Timing:} $\sim$5 minutes on this slide.
+}
 
 
 % ============================================================
@@ -192,7 +269,21 @@
         Interpretation: $\beta$ captures the treatment effect directly.
     \end{example}
 \end{autoframe}
-\note{Work through this step by step on the board if needed.}
+\note{%
+  Work through the algebra on the board:
+
+  \begin{enumerate}
+    \item Start with the full model: $Y = \alpha + \beta X + \gamma Z + \epsilon$.
+    \item Plug in $X=1$, $Z=0$ --- show cancellation explicitly.
+    \item Result: $Y = \alpha + \beta + \epsilon$.
+    \item Interpretation: $\beta$ is the treatment effect for treated units.
+  \end{enumerate}
+
+  \textbf{Common mistake:} students forget that $\alpha$ is still present
+  and try to interpret $\beta$ as the level of $Y$.
+
+  Ask: ``What would $\beta < 0$ mean in our central bank example?''
+}
 
 \subsection{Application}
 
@@ -212,7 +303,24 @@
         \caption{Variable definitions and data sources}
     \end{table}
 \end{autoframe}
-\note{Describe each data source. Mention the sample period and any exclusions.}
+\note{%
+  Describe the data:
+
+  \begin{itemize}
+    \item \textbf{Database~A} (outcome): annual panel, 2000--2022,
+          $N \approx 5{,}000$ observations.  Mention any cleaning steps.
+    \item \textbf{Database~B} (treatment): binary indicator coded from
+          policy announcements.  Stress the exact timing definition.
+    \item \textbf{Database~C} (controls): standard macro controls ---
+          GDP growth, unemployment, CPI.
+  \end{itemize}
+
+  \textbf{Exclusions:} dropped municipalities with $<$100 observations.
+  Explain why.
+
+  If students ask about data access --- point them to the course GitHub
+  repository where a sample extract is available.
+}
 
 
 % ============================================================
@@ -231,7 +339,22 @@
     \vspace{1em}
     \textbf{Next lecture:} Topic of the following session.
 \end{autoframe}
-\note{Recap the three main points. Preview what comes next week.}
+\note{%
+  Recap --- repeat each takeaway in one sentence:
+
+  \begin{enumerate}
+    \item We defined the key concept and its formal conditions.
+    \item We learned how to set up and estimate the baseline model.
+    \item We saw that the results have direct policy implications.
+  \end{enumerate}
+
+  \textbf{Preview next lecture:} ``Next week we extend this to a
+  difference-in-differences design.  Read Chapter~5 of the textbook
+  before class.''
+
+  \medskip
+  Remind students of the problem set deadline (Friday 23:59).
+}
 
 
 % ============================================================
@@ -251,7 +374,20 @@
         Publisher, 2023.
     \end{thebibliography}
 \end{autoframe}
-\note{Mention which readings are required vs.\ optional.}
+\note{%
+  Go through the reference list:
+
+  \begin{itemize}
+    \item \textbf{Required:} Article~1 --- read Sections 1--3 carefully;
+          Section~4 (robustness) is optional but recommended.
+    \item \textbf{Background:} Textbook Chapter~4 covers the same
+          material at a slower pace --- good for students who want more
+          intuition before the math.
+  \end{itemize}
+
+  Remind students: ``These readings will be assumed knowledge in the
+  next lecture.  I will cold-call on the key results.''
+}
 
 
 % ============================================================
@@ -268,7 +404,19 @@
         Your Department, NTNU
     \end{center}
 \end{frame}
-\note{Open for questions. Remind students of office hours.}
+\note{%
+  \textbf{Q\&A time.}
+
+  \begin{itemize}
+    \item ``Any questions about today's material?''
+    \item If silence: prompt with ``What part of the identification
+          argument felt least convincing?''
+    \item Remind: office hours are Wednesdays 14:00--15:30, Room~A301.
+    \item Problem Set~3 is due Friday --- encourage starting early.
+  \end{itemize}
+
+  Thank the students for their attention.
+}
 
 
 % ============================================================
