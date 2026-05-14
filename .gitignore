@@ -1,0 +1,35 @@
+## LaTeX build artifacts
+*.aux
+*.log
+*.nav
+*.out
+*.snm
+*.toc
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.synctex.gz
+*.synctex(busy)
+*.run.xml
+*.bcf
+*.vrb
+
+## Compiled slides (keep source PDFs like logos)
+slide.pdf
+slide_notes.pdf
+
+## OS
+.DS_Store
+Thumbs.db
+
+## Editor / IDE
+.claude/
+*.swp
+*~
+
+## Nested working directories
+overleaf_project/
+overleaf_temp/
+overleaf_progress/
+ntnu_theme/
