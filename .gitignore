@@ -15,9 +15,9 @@
 *.bcf
 *.vrb
 
-## Compiled slides (keep source PDFs like logos)
-slide.pdf
-slide_notes.pdf
+## Compiled slides — tracked so readers can preview without compiling
+# slide.pdf
+# slide_notes.pdf
 
 ## OS
 .DS_Store
